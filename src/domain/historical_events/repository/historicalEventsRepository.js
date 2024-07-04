@@ -18,13 +18,19 @@ function isAlphanumericAndLength2(variable) {
 
 
 exports.getHistoricalEvents = (ocurrence) => {
+
+    if (ocurrence.length !== 2) {
+        return {status: 400, message: 'El input debe ser ac o dc' };
+    }
+    if(!isAlphanumericAndLength2(ocurrence)){
+        return {status: 400, message: "Solo se aceptan caracteres no numéricos"};
+    }
+
     let filtered_events = []
     if (ocurrence == 'ac'){
         filtered_events = eventosJSON.result.events.filter((evn) => evn.date < 0)
     } else if(ocurrence =='dc'){
         filtered_events = eventosJSON.result.events.filter((evn) => evn.date > 0)
-    } else if(!isAlphanumericAndLength2(ocurrence)){
-        filtered_events = {"message"}
     }
     return filtered_events
 }

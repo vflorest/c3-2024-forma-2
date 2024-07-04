@@ -46,17 +46,17 @@ describe ('GET /api/history/:ocurrence', () => {
     Entonces: debe devolver un status 200 y en el body, un arreglo con los eventos históricos que hayan resultado de la búsqueda ordenados desde el más antiguo al más nuevo, en donde 'date' siempre es <= 0
     */
 
-    // describe('ocurrence = ac', () =>{
-    //     test('debería responder con un código 200 y un arreglo con los eventos AC', async () => {
-    //         const response = await request(app.callback()).get('/api/history/ac')
-    //         expect(response.status).toBe(200)
-    //         // console.log(response.body)
+    describe('ocurrence = ac', () =>{
+        test('debería responder con un código 200 y un arreglo con los eventos AC', async () => {
+            const response = await request(app.callback()).get('/api/history/ac')
+            expect(response.status).toBe(200)
+            // console.log(response.body)
     
-    //         // console.log(acEvents)
+            // console.log(acEvents)
     
-    //         expect(response.body).toEqual(acEvents)
-    //     });
-    // })
+            expect(response.body).toEqual(acEvents)
+        });
+    })
 
 
     // /*
@@ -65,17 +65,17 @@ describe ('GET /api/history/:ocurrence', () => {
     // Entonces: debe devolver un status 200 y en el body, un arreglo con los eventos históricos que hayan resultado de la búsqueda ordenados desde el más antiguo al más nuevo, en donde 'date' siempre es > 0
     // */
 
-    // describe('ocurrence = dc', () =>{
-    //     test('debería responder con un código 200 y un arreglo con los eventos DC', async () => {
-    //         const response = await request(app.callback()).get('/api/history/dc')
-    //         expect(response.status).toBe(200)
-    //         // console.log(response.body)
+    describe('ocurrence = dc', () =>{
+        test('debería responder con un código 200 y un arreglo con los eventos DC', async () => {
+            const response = await request(app.callback()).get('/api/history/dc')
+            expect(response.status).toBe(200)
+            // console.log(response.body)
     
-    //         // console.log(dcEvents)
+            // console.log(dcEvents)
     
-    //         expect(response.body).toEqual(dcEvents)
-    //     });
-    // })
+            expect(response.body).toEqual(dcEvents)
+        });
+    })
 
 
     /*
@@ -91,13 +91,26 @@ describe ('GET /api/history/:ocurrence', () => {
         test('debería responder con un código 200 y un arreglo con los eventos DC', async () => {
             const response = await request(app.callback()).get('/api/history/4c')
             expect(response.status).toBe(400)
-            // console.log(response.body)
-    
-            // console.log(dcEvents)
     
             expect(response.body).toEqual({message: "Solo se aceptan caracteres no numéricos"})
         });
     })
 
     
+    /*
+    Dado: Una consulta al servicio
+    Cuando: realice una solicitud a /api/history/:ocurrence y el largo sea != 2
+    Entonces: debe devolver un status 400 y en el body, un objeto con el siguiente formato:
+        {
+            "message": "El input debe ser ac o dc"
+        }
+    */
+    describe('ocurrence es de largo diferente de 2', () =>{
+        test('debería responder con un código 400 y un mensaje de error', async () => {
+            const response = await request(app.callback()).get('/api/history/ac1')
+            expect(response.status).toBe(400)
+    
+            expect(response.body).toEqual({message: "El input debe ser ac o dc"})
+        });
+    })
 })
